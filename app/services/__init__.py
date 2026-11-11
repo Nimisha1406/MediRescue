@@ -1,0 +1,1 @@
+# MediRescue services package

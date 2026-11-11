@@ -1,0 +1,1 @@
+# MediRescue utility functions

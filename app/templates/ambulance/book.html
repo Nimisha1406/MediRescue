@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}Book Ambulance | MediRescue{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4 mb-5">
+
+    <div class="text-center mb-4">
+        <h2 class="text-primary">
+            <i class="bi bi-ambulance"></i>
+            Book an Ambulance
+        </h2>
+        <p class="text-muted">
+            Select your pickup location and enter your destination.
+        </p>
+    </div>
+
+    <div class="card shadow border-0">
+
+        <div class="card-header bg-primary text-white p-3">
+            <h5 class="mb-0">Emergency Booking Form</h5>
+        </div>
+
+        <div class="card-body p-4">
+
+            <form method="POST"
+                  action="{{ url_for('ambulance.book_ambulance') }}">
+
+                <input type="hidden" name="csrf_token"
+                       value="{{ csrf_token() }}">
+
+                <!-- Pickup Address -->
+                <div class="mb-3">
+                    <label class="form-label">Pickup Location</label>
+
+                    <input type="text"
+                           name="pickup_location"
+                           class="form-control"
+                           placeholder="Enter your pickup address"
+                           required>
+                </div>
+
+                <!-- Interactive Map -->
+                <h5 class="mt-4 mb-3">
+                    <i class="bi bi-geo-alt-fill text-danger"></i>
+                    Select Pickup Point on Map
+                </h5>
+
+                <div class="mb-3">
+                    <button type="button"
+                            id="get-location"
+                            class="btn btn-outline-primary">
+
+                        <i class="bi bi-crosshair"></i>
+                        Use My Current Location
+
+                    </button>
+                </div>
+
+                <div id="map"
+                     style="height: 400px; width: 100%; border-radius: 12px;">
+                </div>
+
+                <p class="text-muted mt-2">
+                    Click anywhere on the map to select your pickup point.
+                </p>
+
+                <!-- Pickup Coordinates -->
+                <div class="row mt-3">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Pickup Latitude</label>
+
+                        <input type="number"
+                               step="any"
+                               name="pickup_latitude"
+                               id="pickup_latitude"
+                               class="form-control"
+                               placeholder="Select on map"
+                               readonly
+                               required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Pickup Longitude</label>
+
+                        <input type="number"
+                               step="any"
+                               name="pickup_longitude"
+                               id="pickup_longitude"
+                               class="form-control"
+                               placeholder="Select on map"
+                               readonly
+                               required>
+                    </div>
+
+                </div>
+
+                <hr class="my-4">
+
+                <!-- Destination -->
+                <h5 class="mb-3">
+                    <i class="bi bi-hospital text-success"></i>
+                    Destination Details
+                </h5>
+
+                <div class="mb-3">
+                    <label class="form-label">Destination</label>
+
+                    <input type="text"
+                           name="destination"
+                           class="form-control"
+                           placeholder="Enter hospital or destination"
+                           required>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">
+                            Destination Latitude
+                        </label>
+
+                        <input type="number"
+                               step="any"
+                               name="destination_latitude"
+                               class="form-control"
+                               placeholder="Enter latitude"
+                               required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">
+                            Destination Longitude
+                        </label>
+
+                        <input type="number"
+                               step="any"
+                               name="destination_longitude"
+                               class="form-control"
+                               placeholder="Enter longitude"
+                               required>
+                    </div>
+
+                </div>
+
+                <!-- Emergency Type -->
+                <div class="mb-4">
+                    <label class="form-label">Emergency Type</label>
+
+                    <select name="emergency_type"
+                            class="form-select"
+                            required>
+
+                        <option value="General">General Emergency</option>
+                        <option value="Accident">Road Accident</option>
+                        <option value="Cardiac">Cardiac Emergency</option>
+                        <option value="Critical">Critical Patient</option>
+                        <option value="Other">Other</option>
+
+                    </select>
+                </div>
+
+                <!-- Ambulance Availability -->
+                {% if ambulances %}
+
+                    <div class="alert alert-success">
+                        <i class="bi bi-check-circle-fill"></i>
+                        {{ ambulances|length }}
+                        ambulance(s) currently available.
+                    </div>
+
+                {% else %}
+
+                    <div class="alert alert-danger">
+                        No ambulances are currently available.
+                    </div>
+
+                {% endif %}
+
+                <button type="submit"
+                        class="btn btn-primary btn-lg w-100"
+                        {% if not ambulances %}disabled{% endif %}>
+
+                    <i class="bi bi-check-circle"></i>
+                    Confirm Ambulance Booking
+
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

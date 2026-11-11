@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard | MediRescue{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="text-center mb-4">
+        <h1 class="text-primary">Admin Dashboard</h1>
+        <p class="text-muted">MediRescue Management Panel</p>
+        <h5>Welcome, Administrator!</h5>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card shadow border-0 text-center">
+                <div class="card-body">
+                    <h2>👥</h2>
+                    <h5>Total Patients</h5>
+                    <h2 class="text-primary">{{ total_users }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow border-0 text-center">
+                <div class="card-body">
+                    <h2>🚑</h2>
+                    <h5>Total Ambulances</h5>
+                    <h2 class="text-primary">{{ total_ambulances }}</h2>
+                    <p>Available: {{ available_ambulances }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow border-0 text-center">
+                <div class="card-body">
+                    <h2>👨‍⚕️</h2>
+                    <h5>Total Doctors</h5>
+                    <h2 class="text-primary">{{ total_doctors }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow border-0 text-center">
+                <div class="card-body">
+                    <h2>📋</h2>
+                    <h5>Total Ambulance Bookings</h5>
+                    <h2 class="text-success">{{ total_bookings }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow border-0 text-center">
+                <div class="card-body">
+                    <h2>📅</h2>
+                    <h5>Total Doctor Appointments</h5>
+                    <h2 class="text-success">{{ total_appointments }}</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card shadow border-0 mt-5">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Recent Ambulance Bookings</h5>
+        </div>
+
+        <div class="card-body table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Pickup</th>
+                        <th>Destination</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in recent_bookings %}
+                    <tr>
+                        <td>{{ booking.patient.name }}</td>
+                        <td>{{ booking.pickup_location }}</td>
+                        <td>{{ booking.destination }}</td>
+                        <td>{{ booking.status|capitalize }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            No bookings available.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card shadow border-0 mt-4 mb-5">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Recent Doctor Appointments</h5>
+        </div>
+
+        <div class="card-body table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in recent_appointments %}
+                    <tr>
+                        <td>{{ appointment.patient.name }}</td>
+                        <td>{{ appointment.doctor.name }}</td>
+                        <td>{{ appointment.appointment_date }}</td>
+                        <td>{{ appointment.status|capitalize }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            No appointments available.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

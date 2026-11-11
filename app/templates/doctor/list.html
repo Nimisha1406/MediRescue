@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Find Doctors | MediRescue{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="text-center mb-5">
+        <h2 class="text-primary">Find Your Doctor</h2>
+        <p class="text-muted">
+            Choose a doctor and book a consultation.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        {% for doctor in doctors %}
+
+        <div class="col-md-4">
+            <div class="card shadow border-0 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div style="font-size: 55px;">👨‍⚕️</div>
+
+                    <h5 class="mt-2">{{ doctor.name }}</h5>
+
+                    <span class="badge bg-primary mb-3">
+                        {{ doctor.specialty }}
+                    </span>
+
+                    <p class="mb-2">
+                        <strong>Qualification:</strong><br>
+                        {{ doctor.qualification or 'Not specified' }}
+                    </p>
+
+                    <p class="mb-2">
+                        <strong>Experience:</strong>
+                        {{ doctor.experience or 0 }} years
+                    </p>
+
+                    <p class="mb-3">
+                        <strong>Consultation Fee:</strong>
+                        ₹{{ doctor.consultation_fee }}
+                    </p>
+
+                    <a href="{{ url_for('doctor.book_appointment', doctor_id=doctor.id) }}"
+                       class="btn btn-primary w-100">
+                        Book Appointment
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+
+        <div class="col-12">
+            <div class="alert alert-warning text-center">
+                No doctors are currently available.
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('main.dashboard') }}"
+           class="btn btn-secondary">
+            Back to Dashboard
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile | MediRescue{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-7">
+
+        <div class="card shadow border-0">
+
+            <div class="card-header bg-primary text-white text-center p-3">
+                <h3 class="mb-0">My Profile</h3>
+            </div>
+
+            <div class="card-body p-4">
+
+                <div class="text-center mb-4">
+                    <div style="font-size: 65px;">👤</div>
+                    <h4>{{ user.name }}</h4>
+                    <span class="badge bg-success">Patient</span>
+                </div>
+
+                <hr>
+
+                <div class="mb-3">
+                    <strong>Full Name</strong>
+                    <p>{{ user.name }}</p>
+                </div>
+
+                <div class="mb-3">
+                    <strong>Email Address</strong>
+                    <p>{{ user.email }}</p>
+                </div>
+
+                <div class="mb-3">
+                    <strong>Phone Number</strong>
+                    <p>{{ user.phone }}</p>
+                </div>
+
+                <div class="mb-3">
+                    <strong>Account Type</strong>
+                    <p>{{ user.role|capitalize }}</p>
+                </div>
+
+                <a href="{{ url_for('main.dashboard') }}"
+                   class="btn btn-primary w-100">
+                    Back to Dashboard
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

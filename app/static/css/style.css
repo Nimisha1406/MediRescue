@@ -1,0 +1,508 @@
+/* 1. ROOT VARIABLES */
+
+:root {
+    --primary: #0878c9;
+    --primary-dark: #075b9a;
+    --primary-light: #e8f4ff;
+
+    --secondary: #00a896;
+    --secondary-dark: #008577;
+
+    --danger: #e63946;
+    --success: #198754;
+    --warning: #ffc107;
+
+    --background: #f4f8fc;
+    --white: #ffffff;
+
+    --text-dark: #243447;
+    --text-muted: #6c7a89;
+
+    --border-color: #e1eaf2;
+
+    --shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+}
+
+
+/* 2. GENERAL STYLING */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--background);
+    color: var(--text-dark);
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.text-primary {
+    color: var(--primary) !important;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+
+/* 3. NAVIGATION BAR */
+
+.navbar {
+    background: linear-gradient(
+        90deg,
+        var(--primary-dark),
+        var(--primary)
+    ) !important;
+
+    padding: 14px 0;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 25px;
+    font-weight: 700;
+    color: var(--white) !important;
+    letter-spacing: 0.5px;
+}
+
+.navbar-brand:hover {
+    color: #d5f1ff !important;
+}
+
+.nav-link {
+    color: var(--white) !important;
+    font-weight: 500;
+    margin-left: 12px;
+    transition: 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #cceaff !important;
+}
+
+.navbar-toggler {
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+
+/* 4. BOOTSTRAP CONTAINERS */
+
+.container {
+    max-width: 1200px;
+}
+
+.container-fluid {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+/* 5. CARDS */
+
+.card {
+    background-color: var(--white);
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.09) !important;
+}
+
+.card-header {
+    font-weight: 600;
+    padding: 15px 20px;
+}
+
+.card-body {
+    padding: 24px;
+}
+
+.card-title {
+    font-weight: 600;
+}
+
+
+/* 6. BUTTONS */
+
+.btn {
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.btn-success {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.btn-success:hover {
+    background-color: var(--secondary-dark);
+    border-color: var(--secondary-dark);
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    border-color: var(--danger);
+}
+
+.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+
+/* 7. FORMS */
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.form-control,
+.form-select {
+    border-radius: 8px;
+    padding: 11px 13px;
+    border: 1px solid #d5e0ea;
+    background-color: var(--white);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 0.2rem
+        rgba(8, 120, 201, 0.15);
+}
+
+textarea.form-control {
+    resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #9aa8b5;
+}
+
+
+/* 8. ALERTS */
+
+.alert {
+    border: none;
+    border-radius: 10px;
+    padding: 14px 18px;
+}
+
+.alert-success {
+    background-color: #e6f6ed;
+    color: #146c43;
+}
+
+.alert-danger {
+    background-color: #fdeaea;
+    color: #b02a37;
+}
+
+.alert-warning {
+    background-color: #fff5d8;
+    color: #856404;
+}
+
+.alert-info {
+    background-color: #e5f5fc;
+    color: #055160;
+}
+
+
+/* 9. TABLES */
+
+.table {
+    vertical-align: middle;
+    margin-bottom: 0;
+}
+
+.table thead th {
+    white-space: nowrap;
+    font-weight: 600;
+    padding: 14px;
+}
+
+.table tbody td {
+    padding: 13px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: var(--primary-light);
+}
+
+.table-responsive {
+    border-radius: 10px;
+}
+
+
+/* 10. BADGES */
+
+.badge {
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+
+/* 11. DASHBOARD */
+
+.dashboard-heading {
+    text-align: center;
+    margin: 35px 0;
+}
+
+.dashboard-heading h1 {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.dashboard-card {
+    text-align: center;
+    height: 100%;
+}
+
+.dashboard-card .icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+
+/* 12. AUTHENTICATION PAGES */
+
+.auth-card {
+    max-width: 500px;
+    margin: 40px auto;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+.auth-card h2 {
+    color: var(--primary);
+    text-align: center;
+}
+
+
+/* 13. ADMIN DASHBOARD */
+
+.admin-stat-card {
+    text-align: center;
+    padding: 25px;
+}
+
+.admin-stat-card h2 {
+    color: var(--primary);
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.admin-stat-card .stat-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+
+/* 14. AMBULANCE SECTION */
+
+.ambulance-card {
+    border-left: 5px solid var(--primary);
+}
+
+.ambulance-icon {
+    font-size: 50px;
+}
+
+
+/* 15. DOCTOR SECTION */
+
+.doctor-card {
+    border-top: 4px solid var(--secondary);
+}
+
+.doctor-icon {
+    font-size: 50px;
+}
+
+
+/* 16. MAP CONTAINER (FOR FUTURE MAP FEATURE) */
+
+#map {
+    width: 100%;
+    height: 400px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    z-index: 1;
+}
+
+
+/* 17. FOOTER */
+
+footer {
+    background-color: var(--white) !important;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-color);
+    padding: 18px 0;
+    margin-top: 50px;
+}
+
+footer p {
+    margin-bottom: 0;
+}
+
+
+/* 18. BOOTSTRAP MODALS */
+
+.modal-content {
+    border: none;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+}
+
+.modal-header {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.modal-header .btn-close {
+    filter: brightness(0) invert(1);
+}
+
+
+/* 19. RESPONSIVE DESIGN */
+
+@media (max-width: 992px) {
+
+    .navbar-collapse {
+        padding-top: 12px;
+    }
+
+    .nav-link {
+        margin-left: 0;
+        padding: 10px 0;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .navbar-brand {
+        font-size: 21px;
+    }
+
+    h1 {
+        font-size: 27px;
+    }
+
+    h2 {
+        font-size: 23px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .btn {
+        padding: 9px 14px;
+    }
+
+    #map {
+        height: 300px;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+
+}
+
+@media (max-width: 576px) {
+
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .dashboard-heading {
+        margin: 25px 0;
+    }
+
+    .auth-card {
+        margin: 20px auto;
+    }
+
+}
+
+
+/* 20. ANIMATIONS */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card,
+.alert {
+    animation: fadeIn 0.4s ease;
+}

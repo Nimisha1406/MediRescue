@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Available Ambulances | MediRescue{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="text-center mb-4">
+        <h2 class="text-primary">Available Ambulances</h2>
+        <p class="text-muted">
+            Check the ambulances currently available for booking.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        {% for ambulance in ambulances %}
+
+        <div class="col-md-4">
+            <div class="card shadow border-0 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <h1>🚑</h1>
+
+                    <h5>{{ ambulance.vehicle_no }}</h5>
+
+                    <p class="mb-2">
+                        <strong>Driver:</strong>
+                        {{ ambulance.driver_name }}
+                    </p>
+
+                    <p class="mb-2">
+                        <strong>Contact:</strong>
+                        {{ ambulance.phone }}
+                    </p>
+
+                    <span class="badge bg-success">
+                        {{ ambulance.status|capitalize }}
+                    </span>
+
+                    <div class="mt-3">
+                        <a href="{{ url_for('ambulance.book_ambulance') }}"
+                           class="btn btn-primary">
+                            Book Ambulance
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+
+        <div class="col-12 text-center">
+            <div class="alert alert-warning">
+                No ambulances are currently available.
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('main.dashboard') }}"
+           class="btn btn-secondary">
+            Back to Dashboard
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}
