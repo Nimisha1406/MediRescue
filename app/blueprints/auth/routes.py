@@ -317,3 +317,28 @@ def reset_password():
         return redirect(url_for("auth.login"))
 
     return render_template("auth/reset_password.html")
+
+
+@auth_bp.route("/resend-reset-otp", methods=["POST"])
+def resend_reset_otp():
+    """Resend password-reset OTP."""
+
+    user_id = session.get("pending_reset_user_id")
+
+    if not user_id:
+        flash("Please request a password reset first.", "warning")
+        return redirect(url_for("auth.forgot_password"))
+
+    user = db.session.get(User, user_id)
+
+    if not user:
+        session.pop("pending_reset_user_id", None)
+        flash("User account not found.", "danger")
+        return redirect(url_for("auth.forgot_password"))
+
+    if create_and_send_otp(user, "reset_password"):
+        flash("A new password-reset OTP has been sent to your email.", "success")
+    else:
+        flash("Unable to send OTP. Please try again later.", "danger")
+
+    return redirect(url_for("auth.reset_password"))
