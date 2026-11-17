@@ -53,3 +53,32 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const alerts = document.querySelectorAll(".alert");
+
+    alerts.forEach(function (alert) {
+
+        let delay = 4000;
+
+        if (alert.classList.contains("alert-success")) {
+            delay = 3000;
+        } 
+        else if (alert.classList.contains("alert-danger")) {
+            delay = 5000;
+        }
+
+        setTimeout(function () {
+
+            if (window.bootstrap && bootstrap.Alert) {
+                bootstrap.Alert.getOrCreateInstance(alert).close();
+            } else {
+                alert.remove();
+            }
+
+        }, delay);
+
+    });
+
+});

@@ -17,6 +17,9 @@ def send_otp_email(user, otp, purpose):
     if purpose == "register":
         subject = "MediRescue - Email Verification"
         heading = "Verify Your Email Address"
+    elif purpose == "reset_password":
+        subject = "MediRescue - Password Reset"
+        heading =  "Reset Your Password"
     else:
         subject = "MediRescue - Login Verification"
         heading = "Login Verification"

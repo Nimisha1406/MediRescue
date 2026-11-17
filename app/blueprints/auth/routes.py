@@ -222,3 +222,98 @@ def logout():
     flash("You have been logged out.", "info")
 
     return redirect(url_for("auth.login"))
+
+
+@auth_bp.route("/forgot-password", methods=["GET", "POST"])
+def forgot_password():
+    """Send a password-reset OTP to the registered email."""
+
+    if request.method == "POST":
+        email = request.form.get("email", "").strip().lower()
+
+        if not email:
+            flash("Please enter your registered email address.", "danger")
+            return redirect(url_for("auth.forgot_password"))
+
+        user = User.query.filter_by(email=email).first()
+
+        # Use a generic response to avoid revealing whether an account exists.
+        if user and user.is_email_verified:
+            if create_and_send_otp(user, "reset_password"):
+                session["pending_reset_user_id"] = user.id
+                flash(
+                    "If your account is registered, a password-reset OTP "
+                    "has been sent to your email.",
+                    "info"
+                )
+                return redirect(url_for("auth.reset_password"))
+
+        flash(
+            "If your account is registered, a password-reset OTP "
+            "has been sent to your email.",
+            "info"
+        )
+        return redirect(url_for("auth.forgot_password"))
+
+    return render_template("auth/forgot_password.html")
+
+
+
+@auth_bp.route("/reset-password", methods=["GET", "POST"])
+def reset_password():
+    """Verify reset OTP and allow the user to set a new password."""
+
+    user_id = session.get("pending_reset_user_id")
+
+    if not user_id:
+        flash("Please request a password-reset OTP first.", "warning")
+        return redirect(url_for("auth.forgot_password"))
+
+    user = db.session.get(User, user_id)
+
+    if not user or user.otp_purpose != "reset_password":
+        session.pop("pending_reset_user_id", None)
+        flash("Invalid or expired password-reset request.", "danger")
+        return redirect(url_for("auth.forgot_password"))
+
+    if request.method == "POST":
+        otp = request.form.get("otp", "").strip()
+        password = request.form.get("password", "")
+        confirm_password = request.form.get("confirm_password", "")
+
+        if not otp.isdigit() or len(otp) != 6:
+            flash("Please enter a valid 6-digit OTP.", "danger")
+            return redirect(url_for("auth.reset_password"))
+
+        if not user.verify_otp(otp):
+            flash("Incorrect or expired OTP. Please try again.", "danger")
+            return redirect(url_for("auth.reset_password"))
+
+        if user.otp_purpose != "reset_password":
+            flash("Invalid OTP purpose.", "danger")
+            return redirect(url_for("auth.forgot_password"))
+
+        if len(password) < 8:
+            flash("Password must contain at least 8 characters.", "danger")
+            return redirect(url_for("auth.reset_password"))
+
+        if password != confirm_password:
+            flash("Passwords do not match.", "danger")
+            return redirect(url_for("auth.reset_password"))
+
+        # Update password and clear OTP
+        user.set_password(password)
+        user.clear_otp()
+
+        db.session.commit()
+
+        session.pop("pending_reset_user_id", None)
+
+        flash(
+            "Your password has been reset successfully. Please log in.",
+            "success"
+        )
+
+        return redirect(url_for("auth.login"))
+
+    return render_template("auth/reset_password.html")
