@@ -63,18 +63,10 @@ def book_ambulance():
                 request.form.get("pickup_longitude")
             )
 
-            destination_latitude = float(
-                request.form.get("destination_latitude")
-            )
-
-            destination_longitude = float(
-                request.form.get("destination_longitude")
-            )
-
         except (TypeError, ValueError):
 
             flash(
-                "Please select valid pickup and destination coordinates.",
+                "Please select valid pickup location on the map.",
                 "danger"
             )
 
@@ -99,8 +91,6 @@ def book_ambulance():
             destination=destination,
             pickup_latitude=pickup_latitude,
             pickup_longitude=pickup_longitude,
-            destination_latitude=destination_latitude,
-            destination_longitude=destination_longitude,
             emergency_type=emergency_type,
             status="pending"
         )
